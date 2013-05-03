@@ -41,7 +41,7 @@ sub plugin_load {
 sub received_chat_msg_cb {
     my ($account, $sender, $message, $conv, $flag, $data) = @_;
 
-    if ($account->get_username() !~ m|chat.hipchat.com/xmpp$| 
+    if ($account->get_username() !~ m|chat.hipchat.com/(xmpp)?$| 
 	or $message !~ m/(&lt;|&gt;)/) {
 	Purple::Debug::info(
 	    'hipchat-helper-plugin',
