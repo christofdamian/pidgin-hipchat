@@ -53,15 +53,16 @@ sub plugin_load {
 sub received_chat_msg_cb {
     my ($account, $sender, $message, $conv, $flag, $data) = @_;
 
-    if ($account->get_username() !~ m|chat.hipchat.com/(.*)$| 
-	or $message !~ m/(&lt;|&gt;)/) {
+    my $username = $account->get_username();
+
+    if ($username !~ m|@chat\.hipchat\.com/| or $message !~ m/(&lt;|&gt;)/) {
 	Purple::Debug::info(
 	    'hipchat-helper-plugin',
 	    sprintf(
 		"Skipped message: %s from %s on account %s\n", 
 		$message,  
 		$sender, 
-		$account->get_username()
+		$username
 	    )
 	);
 	return 0;
@@ -75,7 +76,7 @@ sub received_chat_msg_cb {
 	    "Got message: %s from %s on account %s, stripped to: %s\n", 
 	    $message,  
 	    $sender, 
-	    $account->get_username(),
+	    $username,
 	    $stripped_message
 	)
     );
@@ -92,7 +93,7 @@ sub got_presence {
     if($item) {
         my $jid = $item->get_attrib("jid");
         Purple::Debug::info('hipchat-helper-plugin', "XML PRES from: $from, jid: $jid\n");
-        if($jid =~ /@chat.hipchat.com$/ && !$jids{$jid}) {
+        if($jid =~ /@chat\.hipchat\.com$/ && !$jids{$jid}) {
             # Request vCard for this jid
             my $id = "req-" . int(rand(100000));
             my $xml = "<iq type='get' id='$id' to='$jid'><vCard xmlns='vcard-temp'/></iq>";
@@ -121,7 +122,7 @@ sub got_iq {
 
 sub sending_msg {
     my ($account, $message, $id, $plugin) = @_;
-    if ($account->get_username() =~ m|chat.hipchat.com/(xmpp)?$|) {
+    if ($account->get_username() =~ m|@chat\.hipchat\.com/|) {
         ## Replace name with @nick, for all cached names
         foreach my $jid (values(%jids)) {
             $name = $jid->{'name'};
@@ -133,7 +134,10 @@ sub sending_msg {
 
 sub plugin_unload {
     my $plugin = shift;
-    Purple::Debug::info('hipchat-helper-plugin', "plugin_unload() - Hipchat Helper Plugin Unloaded.\n");
+    Purple::Debug::info(
+	'hipchat-helper-plugin',
+	"plugin_unload() - Hipchat Helper Plugin Unloaded.\n"
+    );
 }
 
 
