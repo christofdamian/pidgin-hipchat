@@ -56,29 +56,29 @@ sub received_chat_msg_cb {
     my $username = $account->get_username();
 
     if ($username !~ m|@chat\.hipchat\.com/| or $message !~ m/(&lt;|&gt;)/) {
-	Purple::Debug::info(
-	    'hipchat-helper-plugin',
-	    sprintf(
-		"Skipped message: %s from %s on account %s\n", 
-		$message,  
-		$sender, 
-		$username
-	    )
-	);
-	return 0;
+        Purple::Debug::info(
+            'hipchat-helper-plugin',
+            sprintf(
+                "Skipped message: %s from %s on account %s\n",
+                $message,
+                $sender,
+                $username
+            )
+        );
+        return 0;
     }
-    
+
     my $stripped_message = decode_entities($message);
 
     Purple::Debug::info(
-	'hipchat-helper-plugin',
-	sprintf(
-	    "Got message: %s from %s on account %s, stripped to: %s\n", 
-	    $message,  
-	    $sender, 
-	    $username,
-	    $stripped_message
-	)
+        'hipchat-helper-plugin',
+        sprintf(
+            "Got message: %s from %s on account %s, stripped to: %s\n",
+            $message,
+            $sender,
+            $username,
+            $stripped_message
+        )
     );
 
     $_[2] = $stripped_message;
@@ -135,8 +135,8 @@ sub sending_msg {
 sub plugin_unload {
     my $plugin = shift;
     Purple::Debug::info(
-	'hipchat-helper-plugin',
-	"plugin_unload() - Hipchat Helper Plugin Unloaded.\n"
+        'hipchat-helper-plugin',
+        "plugin_unload() - Hipchat Helper Plugin Unloaded.\n"
     );
 }
 
