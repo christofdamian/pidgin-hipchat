@@ -1,3 +1,7 @@
+⚠️ **This has been migrated to Codeberg https://codeberg.org/cdamian/pidgin-hipchat** 
+
+⚠️ **It is also very old and hipchat doesn't exist any more**
+
 Simple hipchat helper plugin for pidign.
 
 Currently this plugin just does a html decode for all messages comming from
