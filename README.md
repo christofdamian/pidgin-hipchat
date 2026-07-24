@@ -1,4 +1,4 @@
-⚠️ **This has been migrated to Codeberg https://codeberg.org/cdamian/pidgin-hipchat** 
+⚠️ **This has been migrated to Codeberg https://forgejo.damian.net/christof/pidgin-hipchat** 
 
 ⚠️ **It is also very old and hipchat doesn't exist any more**
 
